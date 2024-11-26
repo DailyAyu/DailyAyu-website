@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification Settings</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="navbar-left">
+      <span class="icon">●●●</span>
+      <span class="icon"><</span>
+      <span class="icon">></span>
+      <div class="navbar-search">
+        <img src="https://via.placeholder.com/16" alt="Search Icon">
+        <input type="text" placeholder="Search...">
+      </div>
+    </div>
+    <div class="navbar-right">
+      <span class="icon">☰</span>
+      <span class="icon">🔔</span>
+      <span class="icon">🔄</span>
+      <span class="icon">👤</span>
+    </div>
+  </div>
+
+  <!-- Container -->
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">Untitled UI</div>
+      <ul class="menu">
+        <li class="menu-item"><span class="icon">🔍</span> Search</li>
+        <li class="menu-item"><span class="icon">👤</span> My details</li>
+        <li class="menu-item"><span class="icon">📂</span> Profile</li>
+        <li class="menu-item"><span class="icon">🔑</span> Password</li>
+        <li class="menu-item active"><span class="icon">🔔</span> Notifications</li>
+        <li class="menu-item"><span class="icon">👥</span> Team</li>
+        <li class="menu-item"><span class="icon">💳</span> Billing</li>
+      </ul>
+      <div class="footer">
+        <p>What's new in version 3.8?</p>
+        <div class="footer-content">
+          <img src="https://via.placeholder.com/50" alt="Update">
+          <p>Check the new dashboard view. Pages now load twice as fast!</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <header class="main-header">
+        <h1>Notification Settings</h1>
+        <div class="header-controls">
+          <input type="text" placeholder="Search settings...">
+        </div>
+      </header>
+      <section class="settings">
+        <!-- Email Notifications -->
+        <div class="section">
+          <h2>Email notifications</h2>
+          <div class="divider"></div>
+          <label class="checkbox">
+            <input type="checkbox" checked>
+            <span class="checkmark"></span>
+            News and updates
+            <span class="description">About product and feature updates.</span>
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" checked>
+            <span class="checkmark"></span>
+            Tips on tutorials
+            <span class="description">Learn about getting more out of Untitled.</span>
+          </label>
+          <label class="checkbox">
+            <input type="checkbox">
+            <span class="checkmark"></span>
+            User research
+            <span class="description">Join studies and beta programs.</span>
+          </label>
+        </div>
+        <!-- Push Notifications -->
+        <div class="section">
+          <h2>Push notifications</h2>
+          <div class="divider"></div>
+          <label class="checkbox">
+            <input type="checkbox" checked>
+            <span class="checkmark"></span>
+            Comments
+            <span class="description">Receive updates about new comments.</span>
+          </label>
+          <label class="checkbox">
+            <input type="checkbox">
+            <span class="checkmark"></span>
+            More activity about you
+            <span class="description">Notifications about your profile activity.</span>
+          </label>
+        </div>
+        <!-- Advanced Filters -->
+        <div class="section">
+          <h2>Advanced filters</h2>
+          <button class="filters-btn">Set up filters</button>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
