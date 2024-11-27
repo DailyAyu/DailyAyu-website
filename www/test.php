@@ -19,28 +19,11 @@ if (!isset($_SESSION['nome'])) {
     <title>Página de Teste</title>
 
     <!-- links css -->
-    <link rel="stylesheet" href="./assets/css/global.css">
-    <link rel="stylesheet" href="./assets/css/test.css">
-    <link rel="stylesheet" href="./assets/css/navbar.css">
+
 </head>
 
 <body>
-    <header id="navigation-header">
-        <nav id="navbar">
-            <div id="logo-container">
-                <img src="#" alt="Logo" id="logo">
-            </div>
-            <div id="navigation-buttons">
-                <select id="language-selector" aria-label="Selecione o idioma">
-                    <option value="pt">Português (Brasil)</option>
-                    <option value="en">English (United States)</option>
-                    <option value="es">Español</option>
-                </select>
-                <button class="button-login">Login</button>
-                <button id="button-signup">Cadastrar</button>
-            </div>
-        </nav>
-    </header>
+
 
     <main id="test-container">
         <section id="test-box">

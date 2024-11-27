@@ -14,5 +14,6 @@
             "database": "dailyayu",
             "username": "rafael"
         }
-    ]
+    ],
+    "livePreview.defaultPreviewPath": "/test/index.html"
 }
