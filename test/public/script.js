@@ -8,25 +8,45 @@ document.addEventListener("DOMContentLoaded", () => {
     hiddenMenu.classList.toggle("active");
   });
 
-  // Carregar lista de plugins do servidor
-  function loadPlugins() {
-    pluginsContainer.innerHTML = ""; // Limpa a lista
-    fetch("/plugins")
-      .then((res) => res.json())
-      .then((plugins) => {
-        const ul = document.createElement("ul");
-        plugins.forEach((plugin) => {
-          const li = document.createElement("li");
-          li.textContent = `${plugin.name}: ${plugin.description}`;
-          ul.appendChild(li);
-        });
-        pluginsContainer.appendChild(ul);
-      })
-      .catch((err) => console.error("Erro ao carregar plugins:", err));
-  }
+// Função para carregar plugins dinamicamente
+async function carregarPlugin(pluginPath) {
+  try {
+    // Carrega o código do plugin como um módulo
+    const pluginModule = await import(pluginPath);
 
-  // Inicializar plugins
-  loadPlugins();
+    // Verifica se o plugin tem a função `init`
+    if (typeof pluginModule.init === 'function') {
+      // Fornece uma API segura para o plugin interagir com o site
+      const api = {
+        addContent: (content) => {
+          const contentDiv = document.getElementById("content");
+          contentDiv.innerHTML += content;
+        },
+        log: (message) => console.log(`[PLUGIN]: ${message}`)
+      };
+
+      // Inicializa o plugin com a API
+      pluginModule.init(api);
+    } else {
+      console.error(`O plugin ${pluginPath} não possui uma função init.`);
+    }
+  } catch (error) {
+    console.error(`Erro ao carregar o plugin ${pluginPath}:`, error);
+  }
+}
+
+// Carrega todos os plugins
+function carregarPlugins() {
+  const plugins = [
+        './plugins/plugin1.js', // Caminho para os plugins
+        './plugins/plugin2.js'
+    ];
+
+  plugins.forEach(pluginPath => carregarPlugin(pluginPath));
+}
+
+// Chama a função para carregar plugins ao inicializar o site
+carregarPlugins();
 
   // Adicionar listener para recarregar plugins manualmente
   document.getElementById("reload-plugins-btn").addEventListener("click", () => {
