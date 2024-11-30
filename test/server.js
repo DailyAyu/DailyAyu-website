@@ -26,14 +26,15 @@ function loadPlugins() {
 // Inicialmente, carregue os plugins
 loadPlugins();
 
-// Rota para listar plugins
-app.get("/plugins", (req, res) => {
-  res.json(plugins);
-});
-
 app.post("/plugins/:pluginName/activate", (req, res) => {
   const pluginName = req.params.pluginName;
-  res.json({ message: `${pluginName} ativado com sucesso!` });
+  const plugin = plugins.find(p => p.name === pluginName);
+  if (plugin && plugin.activate) {
+    plugin.activate();
+    res.json({ message: `${pluginName} ativado com sucesso!` });
+  } else {
+    res.status(404).json({ message: "Plugin não encontrado." });
+  }
 });
 
 // Rota para adicionar um novo plugin (apenas simulação para testes locais)
