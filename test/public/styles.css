@@ -227,3 +227,17 @@ img {
   padding: 20px;
   margin-top: 10%;
 }
+
+#reload-plugins-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#reload-plugins-btn:hover {
+  background-color: #0056b3;
+}
