@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 const app = express();
-const PORT = 3050;
+const PORT = 3000;
 
 // Middleware para arquivos estáticos
 app.use(express.static(path.join(__dirname, "public")));
@@ -17,12 +17,7 @@ function loadPlugins() {
   plugins = [];
   fs.readdirSync(pluginsDir).forEach((file) => {
     if (file.endsWith(".js")) {
-      const pluginPath = path.join(pluginsDir, file);
-
-      // Remover o módulo da cache do require
-      delete require.cache[require.resolve(pluginPath)];
-
-      const plugin = require(pluginPath);
+      const plugin = require(path.join(pluginsDir, file));
       plugins.push(plugin.info || { name: file, description: "Sem descrição" });
     }
   });
@@ -32,12 +27,13 @@ function loadPlugins() {
 loadPlugins();
 
 // Rota para listar plugins
-app.get("/plugins-list", (req, res) => {
+app.get("/plugins", (req, res) => {
   res.json(plugins);
 });
 
-// Rota para adicionar um novo plugin (simulação para testes locais)
+// Rota para adicionar um novo plugin (apenas simulação para testes locais)
 app.post("/reload-plugins", (req, res) => {
+  delete require.cache;
   loadPlugins();
   res.json({ message: "Plugins recarregados!" });
 });
