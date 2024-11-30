@@ -16,11 +16,11 @@ let plugins = [];
 function loadPlugins() {
   plugins = [];
   fs.readdirSync(pluginsDir).forEach((file) => {
-    if (file.endsWith(".js")) {
-      const plugin = require(path.join(pluginsDir, file));
-      plugins.push(plugin.info || { name: file, description: "Sem descrição" });
-    }
-  });
+  if (file.endsWith(".js")) {
+    const plugin = require(path.join(pluginsDir, file));
+    plugins.push(plugin.info || { name: file, description: "Sem descrição" });
+  }
+});
 }
 
 // Inicialmente, carregue os plugins
