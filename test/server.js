@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 const app = express();
-const PORT = 3000;
+const PORT = 3050;
 
 // Middleware para arquivos estáticos
 app.use(express.static(path.join(__dirname, "public")));
@@ -18,10 +18,10 @@ function loadPlugins() {
   fs.readdirSync(pluginsDir).forEach((file) => {
     if (file.endsWith(".js")) {
       const pluginPath = path.join(pluginsDir, file);
-      
+
       // Remover o módulo da cache do require
       delete require.cache[require.resolve(pluginPath)];
-      
+
       const plugin = require(pluginPath);
       plugins.push(plugin.info || { name: file, description: "Sem descrição" });
     }
