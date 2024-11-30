@@ -31,6 +31,11 @@ app.get("/plugins", (req, res) => {
   res.json(plugins);
 });
 
+app.post("/plugins/:pluginName/activate", (req, res) => {
+  const pluginName = req.params.pluginName;
+  res.json({ message: `${pluginName} ativado com sucesso!` });
+});
+
 // Rota para adicionar um novo plugin (apenas simulação para testes locais)
 app.post("/reload-plugins", (req, res) => {
   delete require.cache;

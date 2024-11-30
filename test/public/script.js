@@ -27,6 +27,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Inicializar plugins
   loadPlugins();
+  
+  function activatePlugin(pluginName) {
+  fetch(`/plugins/${pluginName}/activate`, { method: "POST" })
+    .then(() => {
+      console.log(`${pluginName} ativado`);
+    })
+    .catch((err) => console.error("Erro ao ativar plugin:", err));
+}
+
+function addPluginActivationOption(pluginName) {
+  const li = document.createElement("li");
+  li.textContent = `${pluginName}`;
+  const activateButton = document.createElement("button");
+  activateButton.textContent = "Ativar";
+  activateButton.addEventListener("click", () => activatePlugin(pluginName));
+  li.appendChild(activateButton);
+  pluginsContainer.appendChild(li);
+}
 
   // Adicionar listener para recarregar plugins manualmente
   document.getElementById("reload-plugins-btn").addEventListener("click", () => {
