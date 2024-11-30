@@ -42,10 +42,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // Chama a função para carregar plugins ao inicializar o site
   carregarPlugins();
 
-  // Adicionar listener para recarregar plugins manualmente
-  document.getElementById("reload-plugins-btn").addEventListener("click", () => {
-    fetch("/reload-plugins", { method: "POST" })
-      .then(() => carregarPlugins()) // Recarregar plugins quando o botão for pressionado
-      .catch((err) => console.error("Erro ao recarregar plugins:", err));
-  });
+function loadPlugins() {
+  pluginsContainer.innerHTML = ""; // Limpa a lista
+  fetch("/plugins")
+    .then((res) => res.json())
+    .then((plugins) => {
+      const ul = document.createElement("ul");
+      plugins.forEach((plugin) => {
+        const li = document.createElement("li");
+        li.textContent = `${plugin.name}: ${plugin.description}`;
+        ul.appendChild(li);
+      });
+      pluginsContainer.appendChild(ul);
+    })
+    .catch((err) => console.error("Erro ao carregar plugins:", err));
+}
+
+// Inicializar plugins
+loadPlugins();
+
+// Adicionar listener para recarregar plugins manualmente
+document.getElementById("reload-plugins-btn").addEventListener("click", () => {
+fetch("/reload-plugins", { method: "POST" })
+  .then(() => loadPlugins())
+  .catch((err) => console.error("Erro ao recarregar plugins:", err));
+});
 });
