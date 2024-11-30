@@ -8,63 +8,45 @@ document.addEventListener("DOMContentLoaded", () => {
     hiddenMenu.classList.toggle("active");
   });
 
-  // Função para carregar plugins dinamicamente
-  async function carregarPlugins() {
+async function carregarPlugins() {
   try {
     // Faz a requisição para listar os plugins
-    const response = await fetch("/plugins-list");
+    const response = await fetch("/plugins");
     const plugins = await response.json();
 
-    // Carrega cada plugin da pasta
-    for (const plugin of plugins) {
-      const pluginPath = `./plugins/${plugin.name}`;
-      const pluginModule = await import(pluginPath);
+    // Verifica se há plugins para adicionar
+    if (plugins && plugins.length > 0) {
+      // Limpa o container de plugins antes de adicionar novos
+      pluginsContainer.innerHTML = "";
 
-      if (typeof pluginModule.init === "function") {
-        const api = {
-          addContent: (content) => {
-            const contentDiv = document.getElementById("content");
-            contentDiv.innerHTML += content;
-          },
-          log: (message) => console.log(`[PLUGIN]: ${message}`),
-        };
+      // Adiciona os plugins ao HTML
+      plugins.forEach(plugin => {
+        const pluginDiv = document.createElement("div");
+        pluginDiv.classList.add("plugin");
 
-        pluginModule.init(api);
-      } else {
-        console.error(`O plugin ${plugin.name} não possui uma função init.`);
-      }
+        // Adiciona o nome e a descrição do plugin
+        pluginDiv.innerHTML = `
+          <h3>${plugin.name}</h3>
+          <p>${plugin.description}</p>
+        `;
+
+        // Adiciona o plugin ao container
+        pluginsContainer.appendChild(pluginDiv);
+      });
+    } else {
+      console.log("Nenhum plugin encontrado.");
     }
   } catch (error) {
     console.error("Erro ao carregar plugins:", error);
   }
 }
 
-  // Chama a função para carregar plugins ao inicializar o site
   carregarPlugins();
 
-function loadPlugins() {
-  pluginsContainer.innerHTML = ""; // Limpa a lista
-  fetch("/plugins")
-    .then((res) => res.json())
-    .then((plugins) => {
-      const ul = document.createElement("ul");
-      plugins.forEach((plugin) => {
-        const li = document.createElement("li");
-        li.textContent = `${plugin.name}: ${plugin.description}`;
-        ul.appendChild(li);
-      });
-      pluginsContainer.appendChild(ul);
-    })
-    .catch((err) => console.error("Erro ao carregar plugins:", err));
-}
-
-// Inicializar plugins
-loadPlugins();
-
-// Adicionar listener para recarregar plugins manualmente
-document.getElementById("reload-plugins-btn").addEventListener("click", () => {
-fetch("/reload-plugins", { method: "POST" })
-  .then(() => loadPlugins())
-  .catch((err) => console.error("Erro ao recarregar plugins:", err));
-});
+  // Adicionar listener para recarregar plugins manualmente
+  document.getElementById("reload-plugins-btn").addEventListener("click", () => {
+    fetch("/reload-plugins", { method: "POST" })
+      .then(() => carregarPlugins()) // Recarregar plugins quando o botão for pressionado
+      .catch((err) => console.error("Erro ao recarregar plugins:", err));
+  });
 });
